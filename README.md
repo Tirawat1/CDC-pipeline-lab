@@ -47,7 +47,7 @@ Instead of running expensive batch jobs, CDC allows:
 5.  **Logstash** consumes Kafka messages and transforms them
 6.  **Elasticsearch** indexes the transformed data for search
 
-###🧩 Components Explained
+### 🧩 Components Explained
 
 ### 1. **Zookeeper** (debezium/zookeeper:1.4)
 - Manages Kafka cluster metadata and coordination
@@ -220,23 +220,8 @@ GRANT SELECT, RELOAD, SHOW DATABASES,
 -   ✅ Docker Compose networking and dependencies
 -   ✅ Elasticsearch indexing and document updates
 
-### Key Insights
-1. **Not all Debezium tutorials are accurate** - many claim Debezium includes 
-   Elasticsearch Sink Connector, but it doesn't. Logstash is the standard solution.
-
-2. **Binlog format matters** - Must use `ROW` format, not `STATEMENT` or `MIXED`
-
-3. **User permissions are critical** - Debezium needs `REPLICATION SLAVE` and 
-   `REPLICATION CLIENT` privileges
-
-4. **Document ID strategy** - Using primary key as Elasticsearch `_id` enables 
-   proper updates instead of duplicates
-
-5. **DELETE handling requires extra work** - Logstash doesn't automatically 
-   delete documents; needs custom logic
 
 ## 🔗 Useful Commands
-
 ```bash
 # Check connector status
 curl http://localhost:8083/connectors/inventory-connector/status
@@ -263,16 +248,6 @@ curl http://localhost:9200/_cat/indices
 docker-compose logs -f logstash
 ```
 
-## 🙏 Credits
-
-This project is inspired by the article:
-
-**"ลองสร้าง Change Data Capture Pipeline ด้วย Debezium และ Apache Kafka"**  
-Published on Medium by Decimo
-
-📖 Original article:  
-https://decimo.medium.com/ลองสร้าง-change-data-capture-pipeline-ด้วย-debezium-และ-apache-kafka-8bf17201a9d6
-
 ⚠️ **Important Note**: The original article mentions using "Elasticsearch Sink 
 Connector included in Debezium Connect" - this information is **incorrect**. 
 Debezium Connect 1.4 does not include the Confluent Elasticsearch Sink Connector. 
@@ -284,22 +259,6 @@ approach.
 This repository is created for **educational purposes** to demonstrate CDC 
 concepts and real-world implementation challengese systems
 
-### ❌ Cons
-
--   **Infrastructure complexity**: 6+ containers to manage
--   **Requires binlog/WAL**: Must configure database properly
--   **Operational overhead**: Monitoring, alerting, troubleshooting
--   **Schema evolution**: DDL changes need careful handling
--   **Storage costs**: Kafka and Elasticsearch both store data
--   **Learning curve**: Understanding Debezium event format
-**OpenTelemetry is not a replacement for CDC**, but they complement each other:
-
-You can use OpenTelemetry to monitor your CDC pipeline:
-- Monitor Kafka consumer lag
-- Track connector failures and retries
-- Measure end-to-end pipeline latency
-- Trace event flow across services
-- Alert on data sync delays
 ``` bash
 docker-compose exec mariadb mysql -uroot -pdebezium inventory \
   -e "INSERT INTO customers (first_name, last_name, email) VALUES ('Jane', 'Smith', 'jane@example.com');"
