@@ -143,8 +143,11 @@ curl -i -X POST \
     "database.hostname": "mariadb",
     "database.port": "3306",
     "database.user": "debezium",
-    "database.password": "debezium",
-   🧪 Testing Results
+    "database.password": "debezium"
+    }
+}
+```
+🧪 Testing Results
 
 ### ✅ What Works
 
