@@ -98,14 +98,13 @@ Instead of running expensive batch jobs, CDC allows:
       CONFIG_STORAGE_TOPIC: connect_configs
       OFFSET_STORAGE_TOPIC: connect_offsets
       STATUS_STORAGE_TOPIC: connect_statuses
-```
+
 
 ------------------------------------------------------------------------
 
 ## ▶️ How to Run
 
 ### 1️⃣ Start services
-
 ``` bash
 docker-compose up -d
 ```
